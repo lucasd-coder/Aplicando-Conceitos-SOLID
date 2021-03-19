@@ -1,0 +1,330 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RentalX Documentation",
+    "description": "This is an API Rent",
+    "version": "1.0.0",
+    "contact": {
+      "email": "email@example.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Create a new user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "zedasilva ",
+                  "email": "zedasilva@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type":"string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "date"
+                      },
+                      "updated_at": {
+                        "type": "date"
+                      }
+                    }
+                },
+                "example": {
+                  "admin": false,
+                  "id": "fa8e4c0e-81b9-4f04-83ce-8a8310cd5b90",
+                  "name": "zedasilva ",
+                  "email": "zedasilva@example.com",
+                  "created_at": "2021-03-19T19:14:17.311Z",
+                  "updated_at": "2021-03-19T19:14:17.311Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                },
+                "example": {
+                  "error": "User Already exist!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["users"],
+        "summary": "List all Users",
+        "description": "List all Users",
+        "parameters":[ {
+          "in": "header",
+          "required": true,
+          "name": "user_id",
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "itens": {
+                    "type": "object",
+                    "additionalProperties":{
+                      "properties": {
+                        "admin": {
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "type":"string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type":"date"
+                        },
+                        "updated_at": {
+                          "type": "date"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example":[
+                {
+                  "admin": true,
+                  "id": "fa8e4c0e-81b9-4f04-83ce-8a8310cd5b90",
+                  "name": "zedasilva ",
+                  "email": "zedasilva@example.com",
+                  "created_at": "2021-03-19T19:14:17.311Z",
+                  "updated_at": "2021-03-19T19:14:17.311Z"
+                },
+                {
+                  "admin": false,
+                  "id": "fa8e4c0e-81b9-4f04-83ce-8a8310cd5b90",
+                  "name": "zedasilva ",
+                  "email": "zedasilva@example.com",
+                  "created_at": "2021-03-19T19:14:17.311Z",
+                  "updated_at": "2021-03-19T19:14:17.311Z"
+                }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                },
+                "example": {
+                  "error": "not authorized!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "List specific users",
+        "description": "somente usuários admin pode acessar",
+        "parameters":[ {
+          "in": "path",
+          "required": true,
+          "name": "user_id",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "type": "object",
+                      "properties": {
+                        "admin": {
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "type":"string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type":"date"
+                        },
+                        "updated_at": {
+                          "type": "date"
+                        }
+                   }
+                },
+                "example":
+                {
+                  "admin": true,
+                  "id": "fa8e4c0e-81b9-4f04-83ce-8a8310cd5b90",
+                  "name": "zedasilva ",
+                  "email": "zedasilva@example.com",
+                  "created_at": "2021-03-19T19:14:17.311Z",
+                  "updated_at": "2021-03-19T19:14:17.311Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                },
+                "example": {
+                  "error": "User Already exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["users"],
+        "summary": "makes admin a user",
+        "description": "makes admin a user",
+        "parameters":[ {
+          "in": "path",
+          "required": true,
+          "name": "user_id",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "type": "object",
+                      "properties": {
+                        "admin": {
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "type":"string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type":"date"
+                        },
+                        "updated_at": {
+                          "type": "date"
+                        }
+                   }
+                },
+                "example":
+                {
+                  "admin": true,
+                  "id": "fa8e4c0e-81b9-4f04-83ce-8a8310cd5b90",
+                  "name": "zedasilva ",
+                  "email": "zedasilva@example.com",
+                  "created_at": "2021-03-19T19:14:17.311Z",
+                  "updated_at": "2021-03-19T19:14:17.311Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                },
+                "example": {
+                  "error": "User Already exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
