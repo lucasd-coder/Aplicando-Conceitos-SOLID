@@ -10,6 +10,16 @@ class ListAllUsersUseCase {
 
   execute({ user_id }: IRequest): User[] {
     // Complete aqui
+
+    const userProfile = this.usersRepository.findById(user_id);
+
+    if (!userProfile.admin) {
+      throw new Error("not authorized");
+    }
+
+    const users = this.usersRepository.list();
+
+    return users;
   }
 }
 

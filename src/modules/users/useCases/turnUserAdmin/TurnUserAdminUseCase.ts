@@ -10,6 +10,15 @@ class TurnUserAdminUseCase {
 
   execute({ user_id }: IRequest): User {
     // Complete aqui
+    const userId = this.usersRepository.findById(user_id);
+
+    if (!userId) {
+      throw new Error("Email Already exist!");
+    }
+
+    const admin = this.usersRepository.turnAdmin(userId);
+
+    return admin;
   }
 }
 
